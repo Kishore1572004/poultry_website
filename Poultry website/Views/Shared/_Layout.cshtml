@@ -1,0 +1,120 @@
+﻿@using System.Security.Claims
+@using Poultry_website.Helpers
+@inject IConfiguration Config
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewBag.Title - Indhu Nattu Kozhi Pannai</title>
+
+    @RenderSection("Styles", required: false)
+
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Prompt&display=swap" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+@{
+        var token = Context.Request.Cookies["Token"];
+        ClaimsPrincipal principal = null;
+        string email = null;
+        string initial = "?";
+
+        if (!string.IsNullOrEmpty(token))
+        {
+                principal = TokenHelper.ValidateToken(token, Config);
+                if (principal != null)
+                {
+                        email = principal.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Email)?.Value;
+                        if (!string.IsNullOrEmpty(email))
+                        {
+                                initial = email[0].ToString().ToUpper();
+                        }
+                }
+        }
+}
+
+<body>
+    <header>
+        <div class="header-bg"></div>
+        <nav class="navbar">
+            
+                <div class="navbar-left">
+                    <span>Welcome!</span>
+                    <div class="profile-circle">@initial</div>  @* Email initial with black bg on right of Welcome! *@
+                </div>
+
+            <ul class="navbar-right">
+                <li><a href="@Url.Action("Index", "Home")">Home</a></li>
+                <li><a href="@Url.Action("Index", "Home")#about-content">About</a></li>
+                <li><a href="@Url.Action("Index", "Home")#care-booking">Chick Care Tips</a></li>
+                <li><a href="@Url.Action("Vaccine", "Home")">Vaccine</a></li>
+
+                @if (principal == null)
+                {
+                    <li><a href="@Url.Action("Login", "Auth")">Login</a></li>
+                }
+                else
+                {
+                    <li>
+                        <form asp-controller="Auth" asp-action="Logout" method="post" style="display:inline;">
+                            @Html.AntiForgeryToken()
+                            <button type="submit" class="logout-btn">Logout</button>
+
+                        </form>
+                    </li>
+                }
+              
+
+
+            </ul>
+        </nav>
+
+      
+
+        <h1>Indhu Nattu Kozhi Pannai</h1>
+        <p>Fresh native chicks delivered every Tuesday – Book Early!</p>
+    </header>
+
+    <div id="mode-toggle" title="Toggle theme">🐔💤</div>
+    <main style="padding: 1rem;">
+        @if (TempData["Success"] != null)
+        {
+            <div class="alert success">@TempData["Success"]</div>
+        }
+
+        @if (TempData["Error"] != null)
+        {
+            <div class="alert error">@TempData["Error"]</div>
+        }
+
+        @RenderBody()
+    </main>
+
+    <footer>
+        <div class="footer-col">
+            <h3>Indhu Nattu Kozhi Pannai</h3>
+            <p>Quality native chicks delivered weekly. Pre-book now for healthy poultry!</p>
+        </div>
+        <div class="footer-col">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="@Url.Action("Index", "Home")#about-content">About</a></li>
+                <li><a href="@Url.Action("Index", "Home")#care-booking">Chick Care Tips</a></li>
+                <li><a href="@Url.Action("Vaccine", "Home")">Vaccine</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h3>Contact Info</h3>
+            <p>7/153, Kandhampalayam, Konur (PO), Namakkal</p>
+            <p>Phone: +91-9443025464</p>
+            <p>Email: kishore.thangavel.p@gmail.com</p>
+        </div>
+    </footer>
+
+    <script src="~/js/site.js"></script>
+    @RenderSection("Scripts", required: false)
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+﻿@{
+    ViewData["Title"] = "Racing Homer | Indhu Nattu Kozhi";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+
+
+<header>
+    <h1>Racing Homer (Pigeon)</h1>
+    <p>Fast. Loyal. Smart. The king of the skies!</p>
+</header>
+
+<div class="content">
+
+    <!-- First Section -->
+    <div class="info-section">
+        <img src="/images/pegion1.jpg" alt="Racing Homer Pigeon 1" />
+        <div class="details">
+            <h2>About Racing Homer</h2>
+            <p>
+                Racing Homers are elite pigeons specially bred for speed and endurance. They return home from
+                hundreds of kilometers away using their amazing homing instinct.
+            </p>
+            <div class="highlight-box">
+                <ul>
+                    <li>🔹 Trusted messenger during wartime</li>
+                    <li>🔹 Strong and intelligent fliers</li>
+                    <li>🔹 Proud part of pigeon racing culture</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Second Section -->
+    <div class="info-section">
+        <div class="details">
+            <h2>Training & Performance</h2>
+            <p>
+                Trained from a young age, these pigeons develop loyalty to their loft and master. Many rural
+                enthusiasts in Tamil Nadu raise them for friendly races and local competitions.
+            </p>
+        </div>
+        <img src="/images/pegion2.jpg" alt="Pigeon 2" />
+    </div>
+
+    <!-- Third Section -->
+    <div class="info-section">
+        <img src="/images/pegion3.jpg" alt="Pigeon 3" />
+        <div class="details">
+            <h2>Why People Love Them</h2>
+            <p>
+                Apart from their racing ability, Racing Homers are calm, adaptive, and strikingly beautiful.
+                They're a great choice for hobbyists or backyard bird keepers.
+            </p>
+        </div>
+    </div>
+
+   
+    <div class="info-section">
+        <div class="details">
+            <h2>Feeding & Care</h2>
+            <p>
+                Feed them with grains, clean water, and ensure their loft is hygienic. They're easy to care for,
+                but thrive best when allowed free flight and daily interaction.
+            </p>
+        </div>
+        <img src="/images/pegion4.jpg" alt="Pigeon 4" />
+    </div>
+
+   
+    <div class="book-box">
+        <div class="price">💰 Price: ₹350 per pair</div>
+        <a href="/aseel#booking">📩 Book Now</a>
+    </div>
+
+</div>
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #fdfbf8;
+        color: #2e2e2e;
+        margin: 0;
+        padding: 0;
+    }
+
+    header {
+        background: linear-gradient(90deg, #8e7050, #5c3b28);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+    .content {
+        max-width: 960px;
+        margin: 2rem auto;
+        padding: 1rem;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        border-radius: 10px;
+    }
+
+    .info-section {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+        .info-section img {
+            max-width: 100%;
+            width: 400px;
+            border-radius: 12px;
+            height: 280px;
+            object-fit: cover;
+            flex: 1 1 40%;
+            transition: transform 0.3s ease;
+        }
+
+            .info-section img:hover {
+                transform: scale(1.05);
+            }
+
+        .info-section .details {
+            flex: 1 1 55%;
+        }
+
+    .details h2 {
+        color: #5c3b28;
+        margin-bottom: 0.5rem;
+    }
+
+    .details p {
+        line-height: 1.7;
+        margin-bottom: 1rem;
+    }
+
+    .highlight-box {
+        background: #fff9f2;
+        border-left: 4px solid #5c3b28;
+        padding: 1rem;
+        border-radius: 6px;
+        font-size: 1rem;
+    }
+
+    .book-box {
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+        .book-box .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 0.8rem;
+        }
+
+        .book-box a {
+            text-decoration: none;
+            background: #5c3b28;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            display: inline-block;
+        }
+
+    @@media (max-width: 768px) {
+        .info-section {
+            flex-direction: column;
+        }
+
+            .info-section img,
+            .info-section .details {
+                flex: 1 1 100%;
+            }
+    }
+
+    .details:hover {
+        background-color: #fbe9dc; /* A slightly darker shade */
+        border-color: #c7a78d;
+        box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+        transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+</style>

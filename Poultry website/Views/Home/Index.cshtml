@@ -1,0 +1,79 @@
+﻿@model Poultry_website.Models.HomePageViewModel
+
+@{
+    ViewBag.Title = "INDHU NATTU KOZHI PANNAI";
+    Layout = "~/Views/Shared/_Layout.cshtml"; // Shared layout handles head, styles, footer
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/site.css" />
+}
+
+
+
+
+<!-- 🖼️ Scrollable Gallery Section -->
+<div class="scroll-gallery">
+    <div class="scroll-track" id="gallery-container">
+        @foreach (var item in Model.GalleryItems)
+        {
+            <div class="scroll-card">
+                <img src="@item.Image" alt="@item.Title" />
+                <h3>
+                    <a href="@item.Link" style="text-decoration:none;color:#333;">
+                        @item.Title
+                    </a>
+                </h3>
+                <p>@item.Line1</p>
+            </div>
+        }
+    </div>
+</div>
+
+<!-- ℹ️ About Section -->
+<div id="about-content" class="about-section">
+    <h2>About Us</h2>
+    <p>
+        Welcome to <strong>Indhu Nattu Kozhi Pannai</strong>, your trusted destination for fresh, healthy, and naturally raised native chickens.
+    </p>
+
+    <div id="more-text" class="hidden">
+        <p>
+            At our farm, we proudly raise traditional Indian breeds such as <em>Aseel, Country Chicks, and Pigeons</em> in a natural, open environment. Our birds are fed with organic grains and reared without synthetic growth boosters, ensuring authentic taste and nutritional value.
+        </p>
+        <p>
+            Our commitment is not just to quality meat and eggs, but also to sustainable farming. We follow ethical poultry practices that prioritize animal welfare, local employment, and eco-friendly systems.
+        </p>
+        <p>
+            Whether you're a poultry enthusiast, a health-conscious buyer, or a restaurant seeking premium native poultry, we cater to your needs with guaranteed freshness and quality. We also offer seasonal offers and home delivery in select locations.
+        </p>
+        <p>
+            Join the many happy customers who trust <strong>Indhu Nattu Kozhi Pannai</strong> for genuine, farm-fresh country poultry. Experience the difference in taste, health, and trust — straight from our farm to your plate!
+        </p>
+    </div>
+
+    <button id="toggle-btn">Read More</button>
+</div>
+
+<!-- 🐣 Chick Care & Booking Section -->
+<section id="care-booking" class="care-booking-section">
+    <div class="care">
+        <h2>Chick Care Tips 🐣</h2>
+        <iframe width="560" height="315" src="https://www.youtube.com/embed/60RqJb-tMjc" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <div class="booking">
+        <h2>📦 Pre-Booking Form</h2>
+        <h4>(Hatch dates only on every Tuesday)</h4>
+        <form asp-controller="Booking" asp-action="SubmitChickBooking" method="post">
+            <input name="Name" placeholder="Your Name" required />
+            <input name="Phone" placeholder="Phone Number" required />
+            <input name="Address" placeholder="Address" required />
+            <input name="NoOfChicks" type="number" placeholder="No. of Chicks" required />
+            <input id="booking-date" name="BookingDate" type="date" required />
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</section>
+@* @section Scripts {
+    <script src="~/js/site.js"></script>
+} *@

@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "Country Bird Vaccine Planner";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<div class="planner-section">
+    <div class="bg-lasota"></div>
+
+    <div class="planner-wrapper">
+        <h2 class="mb-4">📅 Country Bird Vaccine Planner</h2>
+
+        <form method="post" action="/Tools/VaccinePlanner" class="mb-4">
+            <label for="hatchDate" class="form-label">Select Chick Hatch Date:</label>
+            <input type="date" id="hatchDate" name="hatchDate" required class="form-control" />
+            <button type="submit" class="btn btn-primary mt-2">Check Schedule</button>
+        </form>
+
+        @if (ViewBag.Schedule != null)
+        {
+            <h5>📆 Vaccine Schedule from <strong>@(((DateTime)ViewBag.SelectedDate).ToString("dd MMM yyyy")):</strong></h5>
+            @foreach (var entry in ViewBag.Schedule)
+            {
+                <div class="schedule-card">
+                    <div class="vaccine-title">
+                        <span><strong>@entry.date.ToString("dd MMM yyyy")</strong> – @entry.vaccine</span>
+                        <span class="arrow" onclick="toggleDetail(this)">▶</span>
+                    </div>
+                    <div class="detail-text">
+                        <p>💡 <strong>Why needed:</strong> Prevents: @entry.symptom</p>
+                        <p>⚠️ <strong>If missed:</strong> Risk of serious outbreaks and slow growth.</p>
+                        <p>👨‍⚕️ <strong>Dosage Info:</strong> Depends on bird count. Use the dosage tool.</p>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        function toggleDetail(icon) {
+            const detail = icon.closest('.schedule-card').querySelector('.detail-text');
+            if (detail.style.display === "block") {
+                detail.style.display = "none";
+                icon.textContent = "▶";
+            } else {
+                detail.style.display = "block";
+                icon.textContent = "◀";
+            }
+        }
+    </script>
+}
+<style>
+    .planner-section {
+        position: relative;
+        min-height: 100vh;
+        background: #fdfdfd;
+        overflow: hidden;
+    }
+
+    .bg-lasota {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url('/images/lasota.png') no-repeat center center;
+        background-size: contain;
+        opacity: 0.1;
+        z-index: 0;
+        pointer-events: none;
+    }
+
+    .planner-wrapper {
+        position: relative;
+        z-index: 1;
+        max-width: 800px;
+        margin: auto;
+        padding: 40px 20px;
+        font-family: 'Segoe UI', sans-serif;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 12px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.07);
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .schedule-card {
+        background: #fff;
+        border-left: 6px solid #4CAF50;
+        padding: 16px;
+        margin-bottom: 16px;
+        border-radius: 8px;
+        transition: 0.3s ease;
+    }
+
+        .schedule-card:nth-child(odd) {
+            border-left-color: #03A9F4;
+        }
+
+        .schedule-card:nth-child(even) {
+            border-left-color: #9C27B0;
+        }
+
+    .vaccine-title {
+        font-weight: bold;
+        font-size: 1.1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .detail-text {
+        display: none;
+        margin-top: 8px;
+        padding-left: 8px;
+        color: #444;
+        font-size: 0.95rem;
+    }
+
+    .arrow {
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: #555;
+    }
+
+    @@media (max-width: 768px) {
+        .planner-wrapper
+
+    {
+        padding: 20px 15px;
+    }
+
+    .bg-lasota {
+        background-size: cover;
+    }
+
+    }
+</style>

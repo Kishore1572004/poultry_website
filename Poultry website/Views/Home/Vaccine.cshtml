@@ -1,0 +1,131 @@
+﻿@{
+    ViewData["Title"] = "Vaccine Guide";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .vaccine-container {
+        max-width: 1100px;
+        margin: 40px auto;
+        padding: 20px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+        .vaccine-container h2 {
+            color: #2a5d36;
+            margin-bottom: 20px;
+        }
+
+        .vaccine-container p {
+            line-height: 1.7;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+    .vaccine-images {
+        display: flex;
+        justify-content: center;
+        gap: 40px;
+        margin: 30px 0;
+        flex-wrap: wrap;
+    }
+
+    .vaccine-pic {
+        width: 220px;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+        transform: translateY(30px);
+        opacity: 0;
+        transition: transform 0.4s ease, opacity 0.4s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+        .vaccine-pic:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
+        }
+
+    .animate-on-load.show {
+        transform: translateY(0);
+        opacity: 1;
+    }
+
+    .btn-check-schedule {
+        background-color: #2e7d32;
+        color: white;
+        padding: 10px 18px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-weight: 600;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+    }
+
+        .btn-check-schedule:hover {
+            background-color: #1b5e20;
+            transform: scale(1.05);
+        }
+
+
+    .contact-info {
+        margin-top: 30px;
+        padding: 20px;
+        background: #eefbee;
+        border-left: 5px solid #3b8d46;
+        border-radius: 8px;
+    }
+
+        .contact-info a {
+            color: #21632a;
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+    @@media screen and (max-width: 768px) {
+        .vaccine-pic
+
+    {
+        width: 160px;
+    }
+
+    }
+</style>
+
+<div class="vaccine-container">
+    <h2>💉 Chick Vaccination Guide</h2>
+    <p>
+        This guide will help you administer vaccines correctly to native chicks. Proper vaccination ensures better immunity and protects against common poultry diseases.
+    </p>
+    <div style="text-align: right; margin-bottom: 20px;">
+        <a href="/Tools/VaccinePlanner" class="btn-check-schedule">📅 Check Vaccine Schedule</a>
+    </div>
+
+
+    <h4>📌 How to Give Vaccines:</h4>
+    <p><strong>1. Eye Drop Vaccines:</strong> Hold the chick gently and drop 1 drop of vaccine into one eye using a dropper. Let the chick blink naturally to absorb it.</p>
+    <p><strong>2. Injection Type Vaccines:</strong> Administer the dose under the skin of the neck or breast using a sterile needle. Always follow dosage instructions on the vial.</p>
+    <p><strong>3. Oral Vaccines:</strong> Mix the vaccine with clean drinking water and let chicks drink it in the morning before feeding.</p>
+
+    <div class="vaccine-images">
+        <img src="~/images/eyedrop.jpg" alt="Eye Drop Vaccine" class="vaccine-pic animate-on-load" />
+        <img src="~/images/needlevac.jpg" alt="Needle Vaccine" class="vaccine-pic animate-on-load" />
+    </div>
+
+    <div class="contact-info">
+        <p>📞 Want help with vaccinations? Our staff can assist you directly at your home.</p>
+        <p>Contact us via WhatsApp: <a href="https://wa.me/919443025464" target="_blank">+91-9443025464</a> or Email: <a href="mailto:kishore.thangavel.p@gmail.com">kishore.thangavel.p@gmail.com</a></p>
+    </div>
+</div>
+
+<script>
+    window.addEventListener('DOMContentLoaded', () => {
+        const images = document.querySelectorAll('.animate-on-load');
+        images.forEach((img, index) => {
+            setTimeout(() => {
+                img.classList.add('show');
+            }, index * 300);
+        });
+    });
+</script>

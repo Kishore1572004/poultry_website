@@ -1,0 +1,177 @@
+﻿@{
+    ViewData["Title"] = "Country Bird Eggs";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+<header>
+
+    <h1>Country Bird Eggs</h1>
+    <p>Nutritious. Natural. Nattu Kozhi Eggs straight to your home!</p>
+</header>
+
+<div class="content">
+
+    <!-- Section 1 -->
+    <div class="info-section">
+        <img src="/images/egg1.jpg" alt="Country Egg 1" />
+        <div class="details">
+            <h2>Why Choose Country Eggs?</h2>
+            <p>
+                Country bird eggs are naturally laid by free-range hens. Unlike farm eggs, these are chemical-free, have a richer taste, and are more nutritious.
+            </p>
+            <div class="highlight-box">
+                <ul>
+                    <li>🥚 Stronger shells & bright yolks</li>
+                    <li>🌾 No artificial feed or hormones</li>
+                    <li>🐓 From healthy village-raised hens</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section 2 -->
+    <div class="info-section">
+        <div class="details">
+            <h2>Unique Benefits</h2>
+            <p>
+                Each egg is filled with nutrients that improve immunity and stamina. It’s ideal for children, elders, and people recovering from illness.
+            </p>
+            <div class="highlight-box">
+                <ul>
+                    <li>💪 High protein & omega-3 content</li>
+                    <li>🧠 Boosts brain function</li>
+                    <li>🧒 Great for child development</li>
+                </ul>
+            </div>
+        </div>
+        <img src="/images/egg2.jpg" alt="Country Egg 2" />
+    </div>
+
+    <!-- Section 3 -->
+    <div class="info-section">
+        <img src="/images/egg3.jpg" alt="Country Egg 3" />
+        <div class="details">
+            <h2>Traditional Medical Value</h2>
+            <p>
+                In Tamil medicine, nattu kozhi eggs are used for strength, stamina, and disease recovery. Many rural homes still rely on this natural superfood.
+            </p>
+        </div>
+    </div>
+
+    <!-- Price & Booking -->
+    <div class="book-box">
+        <div class="price">💰 Price: ₹14 per egg</div>
+        <a href="/aseel#booking">📦 Order Eggs</a>
+    </div>
+
+</div>
+
+
+@section Styles {
+    <style>
+        header {
+            background: linear-gradient(90deg, #8e7050, #5c3b28);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+            header h1 {
+                font-size: 2.5rem;
+                margin-bottom: 0.5rem;
+            }
+
+        .content {
+            max-width: 960px;
+            margin: 2rem auto;
+            padding: 1rem;
+            background: #fff;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            border-radius: 10px;
+        }
+
+        .info-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+            .info-section img {
+                max-width: 100%;
+                width: 400px;
+                border-radius: 12px;
+                height: 280px;
+                object-fit: cover;
+                flex: 1 1 40%;
+                transition: transform 0.3s ease;
+            }
+
+                .info-section img:hover {
+                    transform: scale(1.05);
+                }
+
+            .info-section .details {
+    flex: 1 1 55%;
+   
+}
+
+
+        .details h2 {
+            color: #5c3b28;
+            margin-bottom: 0.5rem;
+        }
+
+        .details p {
+            line-height: 1.7;
+            margin-bottom: 1rem;
+        }
+
+        .highlight-box {
+            background: #fff9f2;
+            border-left: 4px solid #5c3b28;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .book-box {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+            .book-box .price {
+                font-size: 1.2rem;
+                font-weight: bold;
+                color: #333;
+                margin-bottom: 0.8rem;
+            }
+
+            .book-box a {
+                text-decoration: none;
+                background: #5c3b28;
+                color: white;
+                padding: 0.8rem 1.5rem;
+                border-radius: 8px;
+                font-size: 1rem;
+                display: inline-block;
+            }
+
+        @@media (max-width: 768px) {
+            .info-section {
+                flex-direction: column;
+            }
+
+                .info-section img, .info-section .details {
+                    flex: 1 1 100%;
+                }
+        }
+
+        .details:hover {
+            background-color: #fbe9dc; /* A slightly darker shade */
+            border-color: #c7a78d;
+            box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+            transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+    </style>
+}

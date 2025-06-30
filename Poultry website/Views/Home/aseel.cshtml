@@ -1,0 +1,227 @@
+﻿@{
+    ViewData["Title"] = "Aseel Breed";
+}
+@{
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+
+<header class="aseel-header">
+    <h1>Aseel Chicken Breed</h1>
+    <p>Strong. Native. Resilient. Perfect for Country Poultry Lovers.</p>
+</header>
+
+<div class="content">
+
+    <div class="section">
+        <h2>About Aseel</h2>
+        <p>
+            Aseel chickens are known for their fearless nature, upright posture, and long-lasting strength.
+            Highly valued in rural India for meat quality and disease resistance, they represent heritage.
+        </p>
+    </div>
+
+    <div class="section gallery">
+        <img src="/images/aseelcock1.jpg" alt="Aseel Cock">
+        <img src="/images/aseelhen1.jpg" alt="Aseel Hen">
+        <img src="/images/aseelcock2.jpg" alt="Aseel Cock">
+        <img src="/images/aseelhen2.jpg" alt="Aseel Hen">
+    </div>
+
+    <div class="section cock-hen-grid">
+        <div class="box">
+            <h3>🐓 Aseel Cock</h3>
+            <p>Known for dominance and leadership in flock.</p>
+            <div class="price-box"><strong>Price:</strong> ₹350 per kg</div>
+        </div>
+        <div class="box">
+            <h3>🐔 Aseel Hen</h3>
+            <p>Protective mothers, seasonal layers, and hardy.</p>
+            <div class="price-box"><strong>Price:</strong> ₹300 per kg</div>
+        </div>
+    </div>
+
+    <div class="section" id="order">
+        <h2>Common Booking Form</h2>
+        <div class="order-form">
+            <form asp-controller="Booking" asp-action="SubmitOrderBooking" method="post">
+                <div>
+                    <label>Name</label>
+                    <input type="text" name="Name" required />
+                </div>
+                <div>
+                    <label>Phone</label>
+                    <input type="tel" name="Phone" required pattern="[0-9]{10}" />
+                </div>
+                <div class="full">
+                    <label>Address</label>
+                    <textarea name="Address" rows="3" required></textarea>
+                </div>
+                <div>
+                    <label> DateTime </label>
+                    <input id="Booking-date" name="BookingDate" type="date" required />
+                </div>
+
+                <div class="full">
+                    <label>Category</label>
+                    <select name="category" id="Category" onchange="toggleFields()" required>
+                        <option value="">-- Select --</option>
+                        <option value="hen_cock">Hen or Cock</option>
+                        <option value="pigeon">Pigeon</option>
+                        <option value="egg">Egg</option>
+                    </select>
+                </div>
+
+                <div id="henCockFields" style="display: none;">
+                    <div>
+                        <label>No. of Cocks</label>
+                        <input type="number" name="cockCount" min="0" />
+                    </div>
+                    <div>
+                        <label>No. of Hens</label>
+                        <input type="number" name="henCount" min="0" />
+                    </div>
+                </div>
+
+                <div id="pigeonFields" class="full" style="display: none;">
+                    <label>No. of Pigeon Pairs</label>
+                    <input type="number" name="pigeonPairs" min="0" />
+                </div>
+
+                <div id="eggFields" class="full" style="display: none;">
+                    <label>No. of Egg Dozens</label>
+                    <input type="number" name="eggCount" min="0" />
+                </div>
+
+                <button type="submit">📦 Place Booking</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+@section Scripts {
+    <script>
+        function toggleFields() {
+            const category = document.getElementById('Category').value;
+            document.getElementById('henCockFields').style.display = category === 'hen_cock' ? 'grid' : 'none';
+            document.getElementById('pigeonFields').style.display = category === 'pigeon' ? 'block' : 'none';
+            document.getElementById('eggFields').style.display = category === 'egg' ? 'block' : 'none';
+        }
+    </script>
+}
+
+
+<style>
+    body {
+        font-family: 'Segoe UI', sans-serif;
+        background: #fefcfb;
+        color: #2e2e2e;
+        margin: 0;
+        padding: 0;
+    }
+
+    .aseel-header {
+        background: linear-gradient(90deg, #8e7050, #5c3b28);
+        color: white;
+        padding: 2rem;
+        text-align: center;
+    }
+
+        .aseel-header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+    .content {
+        max-width: 950px;
+        margin: 2rem auto;
+        padding: 1rem;
+        background: #fff;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        border-radius: 10px;
+    }
+
+    .section {
+        margin-bottom: 2rem;
+    }
+
+        .section h2 {
+            color: #5c3b28;
+            border-bottom: 2px solid #e0cdb9;
+            padding-bottom: 0.5rem;
+        }
+
+    .cock-hen-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1.5rem;
+    }
+
+        .cock-hen-grid .box {
+            flex: 1 1 400px;
+            background: #fff9f3;
+            padding: 1rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+    .price-box {
+        background: #f9f3ef;
+        padding: 1rem;
+        border-left: 4px solid #5c3b28;
+        margin-top: 1rem;
+        border-radius: 5px;
+    }
+
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+    }
+
+        .gallery img {
+            width: 100%;
+            border-radius: 10px;
+            height: 180px;
+            object-fit: cover;
+        }
+
+    .order-form {
+        background: #f7f0e9;
+        padding: 1.5rem;
+        border-radius: 10px;
+    }
+
+        .order-form form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+        }
+
+        .order-form label {
+            font-weight: bold;
+        }
+
+        .order-form input, .order-form textarea, .order-form select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .order-form .full {
+            grid-column: span 2;
+        }
+
+        .order-form button {
+            background: #5c3b28;
+            color: white;
+            padding: 0.7rem 1.2rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            grid-column: span 2;
+            font-size: 1rem;
+        }
+</style>

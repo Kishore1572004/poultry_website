@@ -1,0 +1,92 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewData["Title"] - Indhu Nattu Kozhi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    @RenderSection("Styles", required: false)
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #fefcfb;
+            color: #2e2e2e;
+            margin: 0;
+            padding: 0;
+        }
+
+        .navbar {
+            background: #5c3b28;
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .navbar h2 {
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            padding: 0.5rem 1rem;
+            background: #764d2a;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .nav-links a:hover {
+            background: #946847;
+        }
+
+        footer {
+            background: #eee0d5;
+            text-align: center;
+            padding: 1rem;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            color: #444;
+        }
+    </style>
+</head>
+<body>
+    @RenderSection("Scripts", required: false)
+    <!-- Header/Navbar -->
+    <div class="navbar">
+        <h2>Indhu Nattu Kozhi</h2>
+        <div class="nav-links">
+            <a href="/">🏠 Home</a>
+            <a href="/Aseel">🐓 Aseel</a>
+            <a href="/RacingHomer">🕊️ Racing Homer</a>
+            <a href="/Egg">🥚 Egg</a>
+            <a href="/Hatchery">🐣 Hatchery</a>
+         
+        </div>
+    </div>
+
+    <!-- Page Content -->
+    <main role="main">
+        @RenderBody()
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        © 2025 Indhu Nattu Kozhi Pannai – We raise with care, you taste with joy.
+    </footer>
+
+</body>
+</html>

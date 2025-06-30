@@ -1,0 +1,76 @@
+[
+  {
+    "image": "/images/cock1.jpg",
+    "title": "Aseel Breed",
+    "line1": "Aseel roosters are known for their bold nature and upright stance.",
+    "link": "/aseel"
+  },
+  {
+    "image": "/images/chicks.jpg",
+    "title": "Country Chicks",
+    "line1": "These chicks thrive without antibiotics and grow in natural environments.",
+    "link": "#"
+  },
+  {
+    "image": "/images/hatchery.jpg",
+    "title": "Hatchery",
+    "line1": "Modern hatcheries mimic mother hens using automated systems.",
+    "link": "/hatchery"
+  },
+  {
+    "image": "/images/pegion.jpg",
+    "title": "Racing Homer",
+    "line1": "These pigeons can return home from over 1000 km away without GPS.",
+    "link": "/racinghomer"
+  },
+  {
+    "image": "/images/buffalo.jpg",
+    "title": "Farm Buffalo",
+    "line1": "Murrah buffaloes can yield up to 15 liters of milk per day.",
+    "link": "#"
+  },
+  {
+    "image": "/images/egg.jpg",
+    "title": "Eggs",
+    "line1": "Country eggs often have deep yellow yolks rich in nutrients.",
+    "link": "/egg"
+  },
+
+    {
+      "image": "/images/cock1.jpg",
+      "title": "Aseel Breed",
+      "line1": "Aseel roosters are known for their bold nature and upright stance.",
+      "link": "/aseel"
+    },
+    {
+      "image": "/images/chicks.jpg",
+      "title": "Country Chicks",
+      "line1": "These chicks thrive without antibiotics and grow in natural environments.",
+      "link": "#"
+    },
+    {
+      "image": "/images/hatchery.jpg",
+      "title": "Hatchery",
+      "line1": "Modern hatcheries mimic mother hens using automated systems.",
+      "link": "/hatchery"
+    },
+    {
+      "image": "/images/pegion.jpg",
+      "title": "Racing Homer",
+      "line1": "These pigeons can return home from over 1000 km away without GPS.",
+      "link": "/racinghomer"
+    },
+    {
+      "image": "/images/buffalo.jpg",
+      "title": "Farm Buffalo",
+      "line1": "Murrah buffaloes can yield up to 15 liters of milk per day.",
+      "link": "#"
+    },
+    {
+      "image": "/images/egg.jpg",
+      "title": "Eggs",
+      "line1": "Country eggs often have deep yellow yolks rich in nutrients.",
+      "link": "/egg"
+    }
+
+]

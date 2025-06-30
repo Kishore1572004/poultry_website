@@ -1,0 +1,181 @@
+﻿@{
+    ViewData["Title"] = "Hatchery";
+    Layout = "~/Views/Shared/_CommonLayout.cshtml";
+}
+
+<div class="section-highlight">
+    <h1>Hatchery Services</h1>
+    <p>Professional Setup • Hygienic Environment • Bulk Support</p>
+</div>
+
+<div class="row">
+    <div class="image-box">
+        <img src="/images/chicken-hatcheries.jpg" alt="Chick Hatchery Setup" />
+    </div>
+    <div class="text-box">
+        <h2>About Our Hatchery</h2>
+        <p>
+            Our hatchery provides a clean and controlled environment for hatching poultry eggs of all types — Chicken, Duck, Turkey, and Guinea Fowl. We focus on hygiene and consistent care to ensure healthy chicks every time.
+        </p>
+    </div>
+</div>
+
+<div class="row reverse">
+    <div class="image-box">
+        <img src="/images/eeg-hatchery.jpg" alt="Eggs in Incubator" />
+    </div>
+    <div class="text-box">
+        <h2>Why Choose Us?</h2>
+        <ul>
+            <li>✅ Fully hygienic and automated hatchery setup</li>
+            <li>✅ Capacity of 13,000+ eggs per cycle</li>
+            <li>✅ Consistently high hatch rate</li>
+            <li>✅ Suitable for all poultry breeds</li>
+            <li>✅ Bulk orders get special pricing and priority</li>
+        </ul>
+    </div>
+</div>
+
+<div class="form-section">
+    <h2>Book Your Hatch Slot 🐣</h2>
+    <form asp-controller="Booking" asp-action="SubmitHatchBooking" method="post">
+        <input type="text" name="Name" placeholder="Your Name" required />
+        <input name="Address" placeholder="Address" required />
+        <input id="booking-date" name="BookingDate" type="date" required />
+        <input type="number" name="NumberOfEggs" placeholder="Number of Eggs to Hatch" required />
+        <input type="text" name="BreedName" placeholder="Breed Name (e.g., Aseel, Turkey)" required />
+        <textarea name="Instructions" placeholder="Special Instructions"></textarea>
+        <button type="submit">Submit Booking</button>
+    </form>
+
+</div>
+
+
+@section Styles {
+    <style>
+        .section-highlight {
+            background-color: #f3e5d8;
+            padding: 2rem 1rem;
+            text-align: center;
+            border-bottom: 2px solid #d7c4b1;
+        }
+
+            .section-highlight h1 {
+                font-size: 2rem;
+                color: #5c3b23;
+                margin-bottom: 0.5rem;
+            }
+
+            .section-highlight p {
+                color: #7a5b40;
+                font-size: 1rem;
+                margin: 0;
+            }
+
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 1rem;
+            gap: 2rem;
+        }
+
+            .row.reverse {
+                flex-direction: row-reverse;
+            }
+
+        .image-box, .text-box {
+            flex: 1 1 45%;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+            .image-box img {
+                width: 100%;
+                height: auto;
+                border-radius: 10px;
+                box-shadow: 0 0 8px rgba(0, 0, 0, 0.06);
+            }
+
+        .text-box {
+            background-color: #fffaf5;
+            padding: 1.5rem;
+            border: 1px solid #dbc6b6;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.03);
+        }
+
+            .text-box h2 {
+                font-size: 1.4rem;
+                color: #4a2c1a;
+                margin-bottom: 0.8rem;
+            }
+
+            .text-box p, .text-box ul {
+                font-size: 1.05rem;
+                line-height: 1.7;
+            }
+
+            .text-box li {
+                margin-bottom: 0.6rem;
+            }
+
+        .form-section {
+            max-width: 850px;
+            margin: 2rem auto;
+            background-color: #fff6ec;
+            padding: 1.5rem 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.04);
+            border: 1px solid #e0c8af;
+        }
+
+        input, textarea, button {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #d4b49d;
+            border-radius: 6px;
+            font-size: 1rem;
+            background-color: #fefdfb;
+        }
+
+            input:focus, textarea:focus {
+                outline: none;
+                border-color: #ba997d;
+                box-shadow: 0 0 3px #ba997d88;
+            }
+
+        button {
+            background-color: #5c3b23;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+            button:hover {
+                background-color: #3e2918;
+            }
+            /* Zoom effect on image hover */
+.image-box img {
+    transition: transform 0.4s ease;
+}
+
+.image-box:hover img {
+    transform: scale(1.05);
+}
+
+/* Change text-box background and border when hovering the entire row */
+ .text-box:hover {
+    background-color: #fbe9dc; /* A slightly darker shade */
+    border-color: #c7a78d;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
+    transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    </style>
+}
+

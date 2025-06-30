@@ -1,0 +1,164 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Register</title>
+    <link rel="stylesheet" href="~/css/register.css" />
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: url('/images/register-bg.jpg') no-repeat center center fixed;
+            background-size: cover;
+            position: relative;
+        }
+
+    
+        .register-container {
+            position: relative;
+            max-width: 450px;
+            margin: 5% auto;
+            background-color: rgba(255, 255, 255, 0.93);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            opacity:93%;
+
+        }
+        #registerForm{
+            padding:2rem 3rem;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .btn-success {
+            background-color: #5c3b28;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+        }
+
+            .btn-success:hover {
+                background-color: #3e2918;
+            }
+
+        .home-link {
+            text-align: left;
+            padding: 1rem;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+        }
+
+            .home-link a {
+                text-decoration: none;
+                color: white;
+                font-weight: bold;
+            }
+
+                .home-link a:hover {
+                    text-decoration: underline;
+                }
+
+        .alert-danger {
+            color: #721c24;
+            background-color: #f8d7da;
+            padding: 0.8rem;
+            margin: 1rem 0;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        #matchError {
+            display: none;
+            font-size: 0.9em;
+            color: red;
+        }
+
+        p {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+    
+
+    <div class="home-link">
+        <a href="@Url.Action("Index", "Home")">🏠 Home</a>
+    </div>
+
+    <div class="register-container">
+        <h2>Register</h2>
+
+        @if (!string.IsNullOrEmpty(ViewBag.Error))
+        {
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
+
+        <form id="registerForm" asp-controller="Auth" asp-action="Register" method="post">
+            <input type="text" name="FullName" class="form-control" placeholder="Full Name" required />
+            <input type="email" name="Email" class="form-control" placeholder="Email" required />
+            <input type="password" name="Password" id="password" class="form-control" placeholder="Password" required />
+            <input type="password" name="ConfirmPassword" id="confirmPassword" class="form-control" placeholder="Confirm Password" required />
+
+            <span id="matchError">Passwords do not match!</span>
+
+            <button type="submit" class="btn-success">Register</button>
+        </form>
+
+        <p style="margin-top: 1rem;">
+            Already have an account? <a href="@Url.Action("Login", "Auth")">Login here</a>
+        </p>
+    </div>
+
+    <script>
+        const form = document.getElementById('registerForm');
+        const password = document.getElementById('password');
+        const confirmPassword = document.getElementById('confirmPassword');
+        const matchError = document.getElementById('matchError');
+
+        form.addEventListener('submit', function (e) {
+            if (password.value !== confirmPassword.value) {
+                e.preventDefault();
+                matchError.style.display = 'inline';
+            } else {
+                matchError.style.display = 'none';
+            }
+        });
+    </script>
+
+    @if (TempData["Alert"] != null)
+    {
+        <script>
+            alert('@TempData["Alert"]');
+        </script>
+    }
+
+</body>
+</html>
