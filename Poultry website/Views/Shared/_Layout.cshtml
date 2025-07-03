@@ -16,7 +16,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 @{
-        var token = Context.Request.Cookies["Token"];
+        var token = Context.Request.Cookies["AuthToken"];
         ClaimsPrincipal principal = null;
         string email = null;
         string initial = "?";
@@ -39,13 +39,21 @@
     <header>
         <div class="header-bg"></div>
         <nav class="navbar">
-            
-                <div class="navbar-left">
-                    <span>Welcome!</span>
-                    <div class="profile-circle">@initial</div>  @* Email initial with black bg on right of Welcome! *@
-                </div>
+            <div class="navbar-left">
+                <span>Welcome!</span>
+                @if (principal != null && !string.IsNullOrEmpty(email))
+                {
+                    <div class="profile-circle">@initial</div>
+                }
+            </div>
 
-            <ul class="navbar-right">
+            <!-- Hamburger Icon -->
+            <div class="hamburger" onclick="toggleMenu()">
+                ☰
+            </div>
+
+            <!-- Nav Menu -->
+            <ul class="navbar-right" id="navbarMenu">
                 <li><a href="@Url.Action("Index", "Home")">Home</a></li>
                 <li><a href="@Url.Action("Index", "Home")#about-content">About</a></li>
                 <li><a href="@Url.Action("Index", "Home")#care-booking">Chick Care Tips</a></li>
@@ -61,13 +69,9 @@
                         <form asp-controller="Auth" asp-action="Logout" method="post" style="display:inline;">
                             @Html.AntiForgeryToken()
                             <button type="submit" class="logout-btn">Logout</button>
-
                         </form>
                     </li>
                 }
-              
-
-
             </ul>
         </nav>
 
@@ -115,6 +119,12 @@
 
     <script src="~/js/site.js"></script>
     @RenderSection("Scripts", required: false)
+    <script>
+        function toggleMenu() {
+            const menu = document.getElementById("navbarMenu");
+            menu.classList.toggle("show");
+        }
+    </script>
 
 </body>
 </html>

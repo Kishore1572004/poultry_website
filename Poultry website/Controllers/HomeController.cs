@@ -1,14 +1,12 @@
-﻿
-using Microsoft.AspNetCore.Hosting;
+﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration;
-using Microsoft.AspNetCore.Http;
-using Poultry_website.Data;
+using Microsoft.Extensions.Logging;
+using Poultry_website.Domain.Entities;
+using Poultry_website.Domain.Interfaces.Home;
 using Poultry_website.Helpers;
 using Poultry_website.Models;
 using System.Diagnostics;
-using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
 
@@ -18,7 +16,7 @@ namespace Poultry_website.Controllers
     {
         private readonly IWebHostEnvironment _env;
         private readonly ILogger<HomeController> _logger;
-        private readonly PoultryData _context;
+        private readonly IHomeService _homeService;
         private readonly IConfiguration _config;
 
         private static readonly JsonSerializerOptions _jsonOptions = new()
@@ -29,27 +27,25 @@ namespace Poultry_website.Controllers
         public HomeController(
             ILogger<HomeController> logger,
             IWebHostEnvironment env,
-            PoultryData context,
+            IHomeService homeService,
             IConfiguration config)
         {
             _logger = logger;
             _env = env;
-            _context = context;
+            _homeService = homeService;
             _config = config;
         }
 
-        // ✅ Homepage
         public IActionResult Index()
         {
             var model = new HomePageViewModel
             {
-                GalleryItems = _context.GalleryItems.ToList(),
+                GalleryItems = _homeService.GetGalleryItems(),
                 ChickBooking = new ChickBooking()
             };
             return View(model);
         }
 
-        // ✅ View Routes
         [Route("/vaccine")]
         public IActionResult Vaccine() => View();
 
@@ -68,7 +64,6 @@ namespace Poultry_website.Controllers
         [Route("/egg")]
         public IActionResult Egg() => View();
 
-        // ✅ Logout user (clears session and token)
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();
@@ -76,7 +71,6 @@ namespace Poultry_website.Controllers
             return RedirectToAction("Index");
         }
 
-        // ✅ Authenticated Dashboard
         [HttpGet]
         public IActionResult Dashboard()
         {
@@ -89,14 +83,13 @@ namespace Poultry_website.Controllers
                 return RedirectToAction("Login", "Auth");
 
             var email = principal.FindFirst(ClaimTypes.Email)?.Value;
-            var user = _context.Users.FirstOrDefault(u => u.Email == email);
+            var user = _homeService.GetUserByEmail(email);
             if (user == null)
                 return RedirectToAction("Login", "Auth");
 
             return View("Dashboard", user);
         }
 
-        // ✅ Default error page
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

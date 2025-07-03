@@ -77,6 +77,12 @@ header h1 {
     padding: 0;
 }
 
+.hamburger {
+    display: none;
+    font-size: 26px;
+    cursor: pointer;
+}
+
     .navbar-right li a {
         color: #fff;
         text-decoration: none;
@@ -90,20 +96,38 @@ header h1 {
             background-color: rgba(255, 255, 255, 0.2);
         }
 
-/* Profile Circle */
-.profile-circle {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 36px;
-    height: 36px;
-    background-color: #000;
-    color: #fff;
-    border-radius: 50%;
-    font-weight: bold;
-    font-size: 1rem;
-    line-height: 1;
+@media (max-width: 1024px) {
+    .navbar-right {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        background: black;
+        padding: 10px 0;
+    }
+
+        .navbar-right.show {
+            display: flex;
+        }
+
+    .hamburger {
+        display: block;
+    }
 }
+
+.profile-circle {
+    width: 32px;
+    height: 32px;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 32px;
+    font-weight: bold;
+    display: inline-block;
+    margin-left: 10px;
+}
+
+
 .profile-link {
     text-decoration: none;
     cursor: pointer;

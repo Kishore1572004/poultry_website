@@ -1,53 +1,84 @@
-﻿form {
-    max-width: 400px;
-    margin: 40px auto;
-    padding: 25px;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background: #ffffff;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+﻿body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
 }
 
-h2 {
-    text-align: center;
-    margin-bottom: 25px;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+body {
+    background: url('/images/login-bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+
+/* Content container */
+.login-container {
+    position: relative;
+    z-index: 1;
+    max-width: 400px;
+    margin: 5% auto;
+    background-color: rgba(255, 255, 255, 0.92); /* White with slight opacity */
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    opacity: 90%;
+}
+
+h2, .alert, .home-link, p {
     color: #333;
 }
 
-input[type="email"],
-input[type="password"] {
-    width: 100%;
-    padding: 12px;
-    margin-bottom: 16px;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    font-size: 15px;
+.form-group {
+    margin-bottom: 1rem;
+    margin-right: 1rem;
 }
 
-button[type="submit"] {
+.form-control {
     width: 100%;
-    padding: 12px;
-    background-color: #28a745;
+    padding: 0.8rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.btn-primary {
+    background-color: #5c3b28;
     color: white;
-    font-size: 16px;
-    font-weight: bold;
     border: none;
+    padding: 0.8rem;
+    font-size: 1rem;
     border-radius: 6px;
     cursor: pointer;
 }
 
-    button[type="submit"]:hover {
-        background-color: #218838;
+    .btn-primary:hover {
+        background-color: #3e2918;
     }
 
-.alert-success,
-.alert-danger {
-    text-align: center;
-    padding: 10px;
-    margin-bottom: 15px;
-    border-radius: 5px;
-    font-weight: 600;
+.home-link {
+    text-align: left;
+    padding: 1rem;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+    .home-link a {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+    }
+
+    .home-link:hover {
+        text-decoration: underline;
+    }
+
+.alert {
+    padding: 0.8rem;
+    border-radius: 6px;
+    margin: 1rem auto;
+    max-width: 400px;
 }
 
 .alert-success {
@@ -58,9 +89,4 @@ button[type="submit"] {
 .alert-danger {
     background-color: #f8d7da;
     color: #721c24;
-}
-
-p {
-    text-align: center;
-    font-size: 14px;
 }
