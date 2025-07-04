@@ -44,7 +44,7 @@ namespace YourProjectNamespace.Controllers
             }
             catch (Exception ex)
             {
-                // Optional: Log the exception or show a user-friendly message
+                //  Log the exception or show a user-friendly message
                 ViewBag.Error = "An error occurred while generating the vaccine schedule. Please try again.";
                 Console.WriteLine("Error in VaccinePlanner POST: " + ex.Message);
                 return View();

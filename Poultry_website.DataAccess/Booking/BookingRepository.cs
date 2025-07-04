@@ -15,7 +15,7 @@ namespace Poultry_website.DataAccess
             _context = context;
         }
 
-        public async Task<bool> AddChickBookingAsync(ChickBooking model)
+        public async Task<bool> AddChickBookingAsync(String UserId,ChickBooking model)
         {
             try
             {
@@ -29,7 +29,7 @@ namespace Poultry_website.DataAccess
             }
         }
 
-        public async Task<bool> AddHatchBookingAsync(HatchBooking model)
+        public async Task<bool> AddHatchBookingAsync(String UserId,HatchBooking model)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace Poultry_website.DataAccess
             }
         }
 
-        public async Task<bool> AddOrderBookingAsync(OrderBooking model)
+        public async Task<bool> AddOrderBookingAsync(String UserId,OrderBooking model)
         {
             try
             {

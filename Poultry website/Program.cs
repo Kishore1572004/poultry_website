@@ -6,6 +6,10 @@ using Poultry_website.Domain;
 using Poultry_website.Domain.Interfaces.Booking;
 using Poultry_website.Domain.Interfaces.Home;
 using Poultry_website.Service;
+using Poultry_website.DataAccess.Auth;
+using Poultry_website.Service.Auth;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 

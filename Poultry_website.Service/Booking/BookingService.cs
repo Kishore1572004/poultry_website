@@ -16,33 +16,57 @@ namespace Poultry_website.Service
 
         public async Task<bool> SubmitChickBookingAsync(string userId, ChickBooking model)
         {
-            if (Guid.TryParse(userId, out Guid parsedUserId))
+            try
             {
-                model.UserId = parsedUserId;
-                model.BookingDate = DateTime.Now;
-                return await _bookingRepository.AddChickBookingAsync(model);
+                if (Guid.TryParse(userId, out Guid parsedUserId))
+                {
+                    model.UserId = parsedUserId;
+                    model.BookingDate = DateTime.Now;
+                    return await _bookingRepository.AddChickBookingAsync(userId, model);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (e.g., using a logger)
+                Console.WriteLine($"Error in SubmitChickBookingAsync: {ex.Message}");
             }
             return false;
         }
 
         public async Task<bool> SubmitHatchBookingAsync(string userId, HatchBooking model)
         {
-            if (Guid.TryParse(userId, out Guid parsedUserId))
+            try
             {
-                model.UserId = parsedUserId;
-                model.BookingDate = DateTime.Now;
-                return await _bookingRepository.AddHatchBookingAsync(model);
+                if (Guid.TryParse(userId, out Guid parsedUserId))
+                {
+                    model.UserId = parsedUserId;
+                    model.BookingDate = DateTime.Now;
+                    return await _bookingRepository.AddHatchBookingAsync(userId, model);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine($"Error in SubmitHatchBookingAsync: {ex.Message}");
             }
             return false;
         }
 
         public async Task<bool> SubmitOrderBookingAsync(string userId, OrderBooking model)
         {
-            if (Guid.TryParse(userId, out Guid parsedUserId))
+            try
             {
-                model.UserId = parsedUserId;
-                model.BookingDate = DateTime.Now;
-                return await _bookingRepository.AddOrderBookingAsync(model);
+                if (Guid.TryParse(userId, out Guid parsedUserId))
+                {
+                    model.UserId = parsedUserId;
+                    model.BookingDate = DateTime.Now;
+                    return await _bookingRepository.AddOrderBookingAsync(userId, model);
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log the exception
+                Console.WriteLine($"Error in SubmitOrderBookingAsync: {ex.Message}");
             }
             return false;
         }

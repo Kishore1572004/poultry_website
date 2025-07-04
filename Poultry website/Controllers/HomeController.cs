@@ -1,14 +1,14 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
+//using Microsoft.Extensions.Configuration;
+//using Microsoft.Extensions.Logging;
 using Poultry_website.Domain.Entities;
 using Poultry_website.Domain.Interfaces.Home;
 using Poultry_website.Helpers;
 using Poultry_website.Models;
 using System.Diagnostics;
 using System.Security.Claims;
-using System.Text.Json;
+using System;
 
 namespace Poultry_website.Controllers
 {
@@ -19,10 +19,10 @@ namespace Poultry_website.Controllers
         private readonly IHomeService _homeService;
         private readonly IConfiguration _config;
 
-        private static readonly JsonSerializerOptions _jsonOptions = new()
-        {
-            PropertyNameCaseInsensitive = true
-        };
+        //private static readonly JsonSerializerOptions _jsonOptions = new()
+        //{
+        //    PropertyNameCaseInsensitive = true
+        //};
 
         public HomeController(
             ILogger<HomeController> logger,
@@ -38,56 +38,147 @@ namespace Poultry_website.Controllers
 
         public IActionResult Index()
         {
-            var model = new HomePageViewModel
+            try
             {
-                GalleryItems = _homeService.GetGalleryItems(),
-                ChickBooking = new ChickBooking()
-            };
-            return View(model);
+                var model = new HomePageViewModel
+                {
+                    GalleryItems = _homeService.GetGalleryItems(),
+                    ChickBooking = new ChickBooking()
+                };
+                return View(model);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading home page.");
+                TempData["Error"] = "Something went wrong while loading the homepage.";
+                return RedirectToAction("Error");
+            }
         }
 
         [Route("/vaccine")]
-        public IActionResult Vaccine() => View();
+        public IActionResult Vaccine()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading Vaccine page.");
+                return RedirectToAction("Error");
+            }
+        }
 
         [Route("/vaccineplanner")]
-        public IActionResult VaccinePlanner() => View();
+        public IActionResult VaccinePlanner()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading VaccinePlanner page.");
+                return RedirectToAction("Error");
+            }
+        }
 
         [Route("/aseel")]
-        public IActionResult Aseel() => View();
+        public IActionResult Aseel()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading Aseel page.");
+                return RedirectToAction("Error");
+            }
+        }
 
         [Route("/hatchery")]
-        public IActionResult Hatchery() => View();
+        public IActionResult Hatchery()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading Hatchery page.");
+                return RedirectToAction("Error");
+            }
+        }
 
         [Route("/racinghomer")]
-        public IActionResult RacingHomer() => View();
+        public IActionResult RacingHomer()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading RacingHomer page.");
+                return RedirectToAction("Error");
+            }
+        }
 
         [Route("/egg")]
-        public IActionResult Egg() => View();
+        public IActionResult Egg()
+        {
+            try
+            {
+                return View();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading Egg page.");
+                return RedirectToAction("Error");
+            }
+        }
 
         public IActionResult Logout()
         {
-            HttpContext.Session.Clear();
-            Response.Cookies.Delete("Token");
-            return RedirectToAction("Index");
+            try
+            {
+                HttpContext.Session.Clear();
+                Response.Cookies.Delete("Token");
+                return RedirectToAction("Index");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error during logout.");
+                return RedirectToAction("Error");
+            }
         }
 
         [HttpGet]
         public IActionResult Dashboard()
         {
-            var token = Request.Cookies["Token"];
-            if (string.IsNullOrEmpty(token))
-                return RedirectToAction("Login", "Auth");
+            try
+            {
+                var token = Request.Cookies["Token"];
+                if (string.IsNullOrEmpty(token))
+                    return RedirectToAction("Login", "Auth");
 
-            var principal = TokenHelper.ValidateToken(token, _config);
-            if (principal == null)
-                return RedirectToAction("Login", "Auth");
+                var principal = TokenHelper.ValidateToken(token, _config);
+                if (principal == null)
+                    return RedirectToAction("Login", "Auth");
 
-            var email = principal.FindFirst(ClaimTypes.Email)?.Value;
-            var user = _homeService.GetUserByEmail(email);
-            if (user == null)
-                return RedirectToAction("Login", "Auth");
+                var email = principal.FindFirst(ClaimTypes.Email)?.Value;
+                var user = _homeService.GetUserByEmail(email);
+                if (user == null)
+                    return RedirectToAction("Login", "Auth");
 
-            return View("Dashboard", user);
+                return View("Dashboard", user);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error loading dashboard.");
+                return RedirectToAction("Error");
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

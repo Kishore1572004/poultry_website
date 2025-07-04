@@ -2,6 +2,7 @@
 using Poultry_website.Domain.Interfaces.Home;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Poultry_website.DataAccess
 {
@@ -16,12 +17,29 @@ namespace Poultry_website.DataAccess
 
         public List<GalleryItem> GetGalleryItems()
         {
-            return _context.GalleryItems.ToList();
+            try
+            {
+                return _context.GalleryItems.ToList();
+            }
+            catch (Exception ex)
+            {
+                // Log the error or handle as needed
+                Console.WriteLine($"Error in GetGalleryItems: {ex.Message}");
+                return new List<GalleryItem>();
+            }
         }
 
         public User GetUserByEmail(string email)
         {
-            return _context.Users.FirstOrDefault(u => u.Email == email);
+            try
+            {
+                return _context.Users.FirstOrDefault(u => u.Email == email);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error in GetUserByEmail: {ex.Message}");
+                return null;
+            }
         }
     }
 }

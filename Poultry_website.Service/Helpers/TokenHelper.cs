@@ -12,8 +12,8 @@ namespace Poultry_website.Helpers
         /// <summary>
         /// Validates the provided JWT token using the secret key and other settings from configuration.
         /// </summary>
-        /// <param name="token">JWT token string</param>
-        /// <param name="config">Application configuration for JWT settings</param>
+        /// <param name = "token" > JWT token string</param>
+        /// <param name = "config" > Application configuration for JWT settings</param>
         /// <returns>ClaimsPrincipal if token is valid; otherwise, null</returns>
         public static ClaimsPrincipal? ValidateToken(string token, IConfiguration config)
         {

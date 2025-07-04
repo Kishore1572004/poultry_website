@@ -1,44 +1,63 @@
-﻿using System;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+﻿//using System;
+//using System.Security.Cryptography;
+//using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+
+//namespace Poultry_website.Helpers
+//{
+//    public static class PasswordHelper
+//    {
+//        public static string HashPassword(string password)
+//        {
+//            byte[] salt = new byte[128 / 8];
+//            using (var rng = RandomNumberGenerator.Create())
+//            {
+//                rng.GetBytes(salt);
+//            }
+
+//            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+//                password: password,
+//                salt: salt,
+//                prf: KeyDerivationPrf.HMACSHA256,
+//                iterationCount: 10000,
+//                numBytesRequested: 256 / 8));
+
+//            return $"{Convert.ToBase64String(salt)}.{hashed}";
+//        }
+
+//        public static bool VerifyPassword(string password, string storedHash)
+//        {
+//            var parts = storedHash.Split('.');
+//            if (parts.Length != 2)
+//                return false;
+
+//            var salt = Convert.FromBase64String(parts[0]);
+//            var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
+//                password: password,
+//                salt: salt,
+//                prf: KeyDerivationPrf.HMACSHA256,
+//                iterationCount: 10000,
+//                numBytesRequested: 256 / 8));
+
+//            return hashed == parts[1];
+//        }
+//    }
+//}
+using BCrypt.Net;
 
 namespace Poultry_website.Helpers
 {
     public static class PasswordHelper
     {
+        // Hashes password using BCrypt with default work factor
         public static string HashPassword(string password)
         {
-            byte[] salt = new byte[128 / 8];
-            using (var rng = RandomNumberGenerator.Create())
-            {
-                rng.GetBytes(salt);
-            }
-
-            string hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
-
-            return $"{Convert.ToBase64String(salt)}.{hashed}";
+            return BCrypt.Net.BCrypt.HashPassword(password);
         }
 
-        public static bool VerifyPassword(string password, string storedHash)
+        // Verifies password against hashed version
+        public static bool VerifyPassword(string password, string hashedPassword)
         {
-            var parts = storedHash.Split('.');
-            if (parts.Length != 2)
-                return false;
-
-            var salt = Convert.FromBase64String(parts[0]);
-            var hashed = Convert.ToBase64String(KeyDerivation.Pbkdf2(
-                password: password,
-                salt: salt,
-                prf: KeyDerivationPrf.HMACSHA256,
-                iterationCount: 10000,
-                numBytesRequested: 256 / 8));
-
-            return hashed == parts[1];
+            return BCrypt.Net.BCrypt.Verify(password, hashedPassword);
         }
     }
 }

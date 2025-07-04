@@ -65,6 +65,7 @@
         <h2>📦 Pre-Booking Form</h2>
         <h4>(Hatch dates only on every Tuesday)</h4>
         <form asp-controller="Booking" asp-action="SubmitChickBooking" method="post">
+            @Html.AntiForgeryToken()
             <input name="Name" placeholder="Your Name" required />
             <input name="Phone" placeholder="Phone Number" required />
             <input name="Address" placeholder="Address" required />

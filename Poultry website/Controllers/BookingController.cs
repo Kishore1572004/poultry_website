@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Poultry_website.Domain.Entities;
 using Poultry_website.Domain.Interfaces.Booking;
 using System.Security.Claims;
+using System;
+using System.Threading.Tasks;
 
 namespace Poultry_website.Controllers
 {
@@ -14,54 +16,82 @@ namespace Poultry_website.Controllers
         public BookingController(IBookingService bookingService) => _bookingService = bookingService;
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> SubmitChickBooking(ChickBooking model)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (ModelState.IsValid)
+            try
             {
-                var success = await _bookingService.SubmitChickBookingAsync(userId, model);
-                if (success)
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (ModelState.IsValid)
                 {
-                    TempData["Success"] = "Booking submitted successfully!";
-                    return RedirectToAction("Index", "Home");
+                    var success = await _bookingService.SubmitChickBookingAsync(userId, model);
+                    if (success)
+                    {
+                        TempData["Success"] = "Booking submitted successfully!";
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
+
+                TempData["Error"] = "Booking failed. Please try again.";
+                return View(model);
             }
-            TempData["Error"] = "Booking failed. Please try again.";
-            return View(model);
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"An error occurred: {ex.Message}";
+                return View(model);
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> SubmitHatchBooking(HatchBooking model)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (ModelState.IsValid)
+            try
             {
-                var success = await _bookingService.SubmitHatchBookingAsync(userId, model);
-                if (success)
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (ModelState.IsValid)
                 {
-                    TempData["Success"] = "Hatchery booking successful!";
-                    return RedirectToAction("Index", "Home");
+                    var success = await _bookingService.SubmitHatchBookingAsync(userId, model);
+                    if (success)
+                    {
+                        TempData["Success"] = "Hatchery booking successful!";
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
+
+                TempData["Error"] = "Failed to book hatchery. Please check all fields.";
+                return RedirectToAction("Index", "Home");
             }
-            TempData["Error"] = "Failed to book hatchery. Please check all fields.";
-            return RedirectToAction("Index", "Home");
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"An error occurred: {ex.Message}";
+                return RedirectToAction("Index", "Home");
+            }
         }
 
         [HttpPost]
         public async Task<IActionResult> SubmitOrderBooking(OrderBooking model)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-            if (ModelState.IsValid)
+            try
             {
-                var success = await _bookingService.SubmitOrderBookingAsync(userId, model);
-                if (success)
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                if (ModelState.IsValid)
                 {
-                    TempData["Success"] = "Order booking successful!";
-                    return RedirectToAction("Index", "Home");
+                    var success = await _bookingService.SubmitOrderBookingAsync(userId, model);
+                    if (success)
+                    {
+                        TempData["Success"] = "Order booking successful!";
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
+
+                TempData["Error"] = "Failed to book order. Try again.";
+                return RedirectToAction("Index", "Home");
             }
-            TempData["Error"] = "Failed to book order. Try again.";
-            return RedirectToAction("Index", "Home");
+            catch (Exception ex)
+            {
+                TempData["Error"] = $"An error occurred: {ex.Message}";
+                return RedirectToAction("Index", "Home");
+            }
         }
     }
 }
