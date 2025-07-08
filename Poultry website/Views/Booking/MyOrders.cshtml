@@ -1,0 +1,552 @@
+﻿@model Poultry_website.ViewModels.BookingModel
+@using System
+
+@{
+    ViewBag.Title = "My Orders";
+    Layout = null;
+}
+
+<!-- Inline CSS -->
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.my-orders-container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background: white;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+}
+
+h2, h4 {
+    color: #2c3e50;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.table-wrapper {
+    overflow-x: auto;
+    margin-bottom: 40px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+    color: #333;
+}
+
+.btn {
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: 0.3s;
+}
+
+.btn-edit {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn-secondary {
+    background-color: #6c757d;
+    color: white;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.badge {
+    display: inline-block;
+    padding: 5px 8px;
+    border-radius: 10px;
+    background-color: #999;
+    color: white;
+    font-size: 0.8rem;
+}
+
+.alert {
+    padding: 15px;
+    background-color: #f8d7da;
+    color: #721c24;
+    margin-top: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+}
+
+@@media (max-width: 768px) {
+    table, th, td {
+        font-size: 0.85rem;
+    }
+
+    .btn {
+        padding: 4px 8px;
+    }
+}
+
+</style>
+
+<!-- Main Content -->
+<div class="my-orders-container">
+    <h2>My Bookings</h2>
+
+    <!-- Home Button -->    
+    <div class="mb-3">
+        <a class="btn btn-secondary" href="@Url.Action("Index", "Home")">🏠 Home</a>
+    </div>
+<!-- ==== Order Bookings ==== -->
+<h4>Order Bookings</h4>
+@if (Model.OrderBookings?.Any() == true)
+{
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Name</th>
+                    <th>Phone</th>
+                    <th>Address</th>
+                    <th>Category</th>
+                    <th>Cock</th>
+                    <th>Hen</th>
+                    <th>Pigeon</th>
+                    <th>Egg</th>
+                    <th>Booking Date</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.OrderBookings.Count; i++)
+                {
+                    var order = Model.OrderBookings[i];
+                    var hours = (DateTime.UtcNow - (order.CreatedAt ?? DateTime.UtcNow)).TotalHours;
+                    var isEditable = hours <= 24;
+
+                    <tr id="row-@order.Id">
+                        <td>@(i + 1)</td>
+
+                        <td>
+                            <span id="name-@order.Id">@order.Name</span>
+                            <input type="text" id="name-input-@order.Id" value="@order.Name" style="display:none;" class="form-control" />
+                        </td>
+
+                        <td>
+                            <span id="phone-@order.Id">@order.Phone</span>
+                            <input type="text" id="phone-input-@order.Id" value="@order.Phone" style="display:none;" class="form-control" />
+                        </td>
+
+                        <td>
+                            <span id="address-@order.Id">@order.Address</span>
+                            <input type="text" id="address-input-@order.Id" value="@order.Address" style="display:none;" class="form-control" />
+                        </td>
+
+                        <td>
+                            <span id="category-@order.Id">@order.Category</span>
+                            <input type="text" id="category-input-@order.Id" value="@order.Category" style="display:none;" class="form-control" />
+                        </td>
+
+                        <td>
+                            <span id="cockCount-@order.Id">@((order.CockCount ?? 0))</span>
+                            <input type="number" id="cockCount-input-@order.Id" value="@((order.CockCount ?? 0))" style="display:none;" class="form-control" />
+                        </td>
+
+                        <td>
+                            <span id="henCount-@order.Id">@((order.HenCount ?? 0))</span>
+                            <input type="number" id="henCount-input-@order.Id" value="@((order.HenCount ?? 0))" style="display:none;" class="form-control" />
+                        </td>
+
+                        <td>
+                            <span id="pigeonPairs-@order.Id">@((order.PigeonPairs ?? 0))</span>
+                            <input type="number" id="pigeonPairs-input-@order.Id" value="@((order.PigeonPairs ?? 0))" style="display:none;" class="form-control" />
+                        </td>
+
+                        <td>
+                            <span id="eggCount-@order.Id">@((order.EggCount ?? 0))</span>
+                            <input type="number" id="eggCount-input-@order.Id" value="@((order.EggCount ?? 0))" style="display:none;" class="form-control" />
+                        </td>
+
+                        <td>
+                            <span id="bookingDate-@order.Id">
+                                @(order.BookingDate?.ToString("dd-MM-yyyy hh:mm tt") ?? "-")
+                            </span>
+                            <input type="datetime-local" id="bookingDate-input-@order.Id" 
+                                   value="@(order.BookingDate?.ToString("yyyy-MM-ddTHH:mm") ?? "")" style="display:none;" class="form-control" />
+                        </td>
+
+                        <td>
+                            <span id="createdAt-@order.Id">@(order.CreatedAt?.ToString("dd-MM-yyyy hh:mm tt") ?? "-")</span>
+                            <input type="datetime-local" id="createdAt-input-@order.Id"
+                                   value="@(order.CreatedAt?.ToString("yyyy-MM-ddTHH:mm") ?? "")" style="display:none;" class="form-control" />
+                        </td>
+
+                        <td>
+                            @if (isEditable)
+                            {
+                                <button type="button" class="btn btn-sm btn-warning" onclick="toggleEdit('@order.Id')" id="edit-btn-@order.Id">Edit</button>
+                                <button type="button" class="btn btn-sm btn-success" style="display:none;" id="update-btn-@order.Id" onclick="updateOrder('@order.Id')">Update</button>
+
+                                <form method="post" action="@Url.Action("DeleteOrderBooking", "Booking")" style="display:inline;">
+                                    <input type="hidden" name="id" value="@order.Id" />
+                                    <button type="submit" class="btn-delete" onclick="return confirm('Delete this order?');">Delete</button>
+                                </form>
+                            }
+                            else
+                            {
+                                <span class="badge bg-secondary">Expired</span>
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else
+{
+    <div class="alert">No Order Bookings found.</div>
+}
+
+
+    <!-- ==== Chick Bookings ==== -->
+    <h4>Chick Bookings</h4>
+    @if (Model.ChickBookings?.Any() == true)
+    {
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>No. of Chicks</th>
+                        <th>Booking Date</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.ChickBookings.Count; i++)
+{
+    var chick = Model.ChickBookings[i];
+    var hours = (DateTime.UtcNow - (chick.CreatedAt ?? DateTime.UtcNow)).TotalHours;
+    var isEditable = hours <= 24;
+
+    <tr id="row-@chick.Id">
+        <td>@(i + 1)</td>
+        <td>
+            <span id="name-@chick.Id">@chick.Name</span>
+            <input type="text" id="name-input-@chick.Id" value="@chick.Name" style="display:none;" />
+        </td>
+        <td>
+            <span id="phone-@chick.Id">@chick.Phone</span>
+            <input type="text" id="phone-input-@chick.Id" value="@chick.Phone" style="display:none;" />
+        </td>
+        <td>
+            <span id="address-@chick.Id">@chick.Address</span>
+            <input type="text" id="address-input-@chick.Id" value="@chick.Address" style="display:none;" />
+        </td>
+        <td>
+            <span id="count-@chick.Id">@chick.NoOfChicks</span>
+            <input type="number" id="count-input-@chick.Id" value="@chick.NoOfChicks" style="display:none;" />
+        </td>
+        <td>@(chick.BookingDate?.ToString("dd-MM-yyyy hh:mm tt") ?? "-")</td>
+        <td>@(chick.CreatedAt?.ToString("dd-MM-yyyy hh:mm tt") ?? "-")</td>
+        <td>
+            @if (isEditable)
+            {
+                <button type="button" id="btn-@chick.Id" onclick="toggleChickEdit('@chick.Id')">Edit</button>
+
+                <form method="post" action="@Url.Action("DeleteChickBooking", "Booking")" style="display:inline;">
+                    <input type="hidden" name="id" value="@chick.Id" />
+                    <button type="submit" class="btn btn-delete" onclick="return confirm('Delete this chick booking?');">Delete</button>
+                </form>
+            }
+            else
+            {
+                <span style="color:gray;">Not Editable</span>
+            }
+        </td>
+    </tr>
+
+}
+           
+                </tbody>
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert">No Chick Bookings found.</div>
+    }
+
+    <!-- ==== Hatch Bookings ==== -->
+    <h4>Hatch Bookings</h4>
+    @if (Model.HatchBookings?.Any() == true)
+    {
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Address</th>
+                        <th>Breed</th>
+                        <th>Eggs</th>
+                        <th>Instructions</th>
+                        <th>Booking Date</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+               <tbody>
+    @for (int i = 0; i < Model.HatchBookings.Count; i++)
+    {
+        var hatch = Model.HatchBookings[i];
+        var hours = (DateTime.UtcNow - (hatch.CreatedAt ?? DateTime.UtcNow)).TotalHours;
+        var isEditable = hours <= 24;
+
+        <tr id="row-@hatch.Id">
+            <td>@(i + 1)</td>
+
+            <td>
+                <span id="name-@hatch.Id">@hatch.Name</span>
+                <input id="name-input-@hatch.Id" class="form-control" style="display:none;" value="@hatch.Name" />
+            </td>
+
+            <td>
+                <span id="address-@hatch.Id">@hatch.Address</span>
+                <input id="address-input-@hatch.Id" class="form-control" style="display:none;" value="@hatch.Address" />
+            </td>
+
+            <td>
+                <span id="breed-@hatch.Id">@hatch.BreedName</span>
+                <input id="breed-input-@hatch.Id" class="form-control" style="display:none;" value="@hatch.BreedName" />
+            </td>
+
+            <td>
+                <span id="eggs-@hatch.Id">@hatch.NumberOfEggs</span>
+                <input id="eggs-input-@hatch.Id" class="form-control" style="display:none;" value="@hatch.NumberOfEggs" />
+            </td>
+
+            <td>
+                <span id="instruct-@hatch.Id">@hatch.Instructions</span>
+                <input id="instruct-input-@hatch.Id" class="form-control" style="display:none;" value="@hatch.Instructions" />
+            </td>
+
+            <td>@(hatch.BookingDate?.ToString("dd-MM-yyyy hh:mm tt") ?? "-")</td>
+            <td>@(hatch.CreatedAt?.ToString("dd-MM-yyyy hh:mm tt") ?? "-")</td>
+
+            <td>
+                @if (isEditable)
+                {
+                    <button class="btn btn-sm btn-warning" onclick="toggleEditHatch('@hatch.Id')">Edit</button>
+                    <button class="btn btn-sm btn-success" style="display:none;" id="update-btn-@hatch.Id" onclick="updateHatch('@hatch.Id')">Update</button>
+
+                    <form method="post" action="@Url.Action("DeleteHatchBooking", "Booking")" style="display:inline;">
+                        <input type="hidden" name="id" value="@hatch.Id" />
+                        <button type="submit" class="btn-delete" onclick="return confirm('Delete this hatch booking?');">Delete</button>
+                    </form>
+                }
+                else
+                {
+                    <span class="badge bg-secondary">Expired</span>
+                }
+            </td>
+        </tr>
+    }
+</tbody>
+
+            </table>
+        </div>
+    }
+    else
+    {
+        <div class="alert">No Hatch Bookings found.</div>
+    }
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    // CHICK BOOKING: Edit / Update
+    function toggleChickEdit(id) {
+        const $btn = $('#btn-' + id);
+        const isEdit = $btn.text() === 'Edit';
+
+        const fields = ['name', 'phone', 'address', 'count'];
+
+        fields.forEach(field => {
+            $('#'+field+'-' + id).toggle(!isEdit);
+            $('#'+field+'-input-' + id).toggle(isEdit);
+        });
+
+        if (!isEdit) {
+            const data = {
+                Id: id,
+                Name: $('#name-input-' + id).val(),
+                Phone: $('#phone-input-' + id).val(),
+                Address: $('#address-input-' + id).val(),
+                NoOfChicks: $('#count-input-' + id).val()
+            };
+
+            $.ajax({
+                url: '/Booking/UpdateChickBooking',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function () {
+                    $('#name-' + id).text(data.Name);
+                    $('#phone-' + id).text(data.Phone);
+                    $('#address-' + id).text(data.Address);
+                    $('#count-' + id).text(data.NoOfChicks);
+                },
+                error: () => alert('Update failed!')
+            });
+        }
+
+        $btn.text(isEdit ? 'Update' : 'Edit');
+    }
+</script>
+
+<script>
+    // HATCH BOOKING: Edit / Update
+    function toggleEditHatch(id) {
+        const fields = ['name', 'address', 'breed', 'eggs', 'instruct'];
+
+        fields.forEach(field => {
+            $('#' + field + '-' + id).hide();
+            $('#' + field + '-input-' + id).show();
+        });
+
+        $('#row-' + id + ' .btn-warning').hide();
+        $('#update-btn-' + id).show();
+    }
+
+    function updateHatch(id) {
+        const data = {
+            Id: id,
+            Name: $('#name-input-' + id).val(),
+            Address: $('#address-input-' + id).val(),
+            BreedName: $('#breed-input-' + id).val(),
+            NumberOfEggs: $('#eggs-input-' + id).val(),
+            Instructions: $('#instruct-input-' + id).val()
+        };
+
+        $.ajax({
+            url: '/Booking/UpdateHatchBooking',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function () {
+                $('#name-' + id).text(data.Name).show();
+                $('#address-' + id).text(data.Address).show();
+                $('#breed-' + id).text(data.BreedName).show();
+                $('#eggs-' + id).text(data.NumberOfEggs).show();
+                $('#instruct-' + id).text(data.Instructions).show();
+
+                ['name', 'address', 'breed', 'eggs', 'instruct'].forEach(field => {
+                    $('#' + field + '-input-' + id).hide();
+                });
+
+                $('#row-' + id + ' .btn-warning').show();
+                $('#update-btn-' + id).hide();
+            },
+            error: () => alert("Update failed.")
+        });
+    }
+</script>
+
+<script>
+    // ORDER BOOKING: Edit / Update
+    function toggleEdit(id) {
+        const isEditing = $('#update-btn-' + id).is(':visible');
+
+        const fields = [
+            "name", "phone", "address", "category",
+            "cockCount", "henCount", "pigeonPairs", "eggCount"
+        ];
+
+        fields.forEach(field => {
+            $('#' + field + '-' + id).toggle(isEditing);
+            $('#' + field + '-input-' + id).toggle(!isEditing);
+        });
+
+        $('#edit-btn-' + id).toggle(isEditing);
+        $('#update-btn-' + id).toggle(!isEditing);
+    }
+
+    function updateOrder(id) {
+        const data = {
+            Id: id,
+            Name: $('#name-input-' + id).val(),
+            Phone: $('#phone-input-' + id).val(),
+            Address: $('#address-input-' + id).val(),
+            Category: $('#category-input-' + id).val(),
+            CockCount: parseInt($('#cockCount-input-' + id).val()) || 0,
+            HenCount: parseInt($('#henCount-input-' + id).val()) || 0,
+            PigeonPairs: parseInt($('#pigeonPairs-input-' + id).val()) || 0,
+            EggCount: parseInt($('#eggCount-input-' + id).val()) || 0
+        };
+
+        $.ajax({
+            url: '/Booking/UpdateOrderBooking',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function () {
+                $('#name-' + id).text(data.Name);
+                $('#phone-' + id).text(data.Phone);
+                $('#address-' + id).text(data.Address);
+                $('#category-' + id).text(data.Category);
+                $('#cockCount-' + id).text(data.CockCount);
+                $('#henCount-' + id).text(data.HenCount);
+                $('#pigeonPairs-' + id).text(data.PigeonPairs);
+                $('#eggCount-' + id).text(data.EggCount);
+
+                const fields = [
+                    "name", "phone", "address", "category",
+                    "cockCount", "henCount", "pigeonPairs", "eggCount"
+                ];
+
+                fields.forEach(field => {
+                    $('#' + field + '-' + id).show();
+                    $('#' + field + '-input-' + id).hide();
+                });
+
+                $('#edit-btn-' + id).show();
+                $('#update-btn-' + id).hide();
+            },
+            error: (err) => {
+                console.error(err);
+                alert('Update failed.');
+            }
+        });
+    }
+</script>

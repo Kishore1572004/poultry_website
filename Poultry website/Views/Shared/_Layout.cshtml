@@ -1,5 +1,7 @@
 ﻿@using System.Security.Claims
 @using Poultry_website.Helpers
+@using System.Text.Json
+
 @inject IConfiguration Config
 
 <!DOCTYPE html>
@@ -58,7 +60,7 @@
                 <li><a href="@Url.Action("Index", "Home")#about-content">About</a></li>
                 <li><a href="@Url.Action("Index", "Home")#care-booking">Chick Care Tips</a></li>
                 <li><a href="@Url.Action("Vaccine", "Home")">Vaccine</a></li>
-
+                <li><a href="@Url.Action("MyOrders", "Booking")">Bookings</a></li>
                 @if (principal == null)
                 {
                     <li><a href="@Url.Action("Login", "Auth")">Login</a></li>
@@ -91,7 +93,9 @@
         @if (TempData["Error"] != null)
         {
             <div class="alert error">@TempData["Error"]</div>
+            <input type="hidden" id="error-message" value="@TempData["Error"]" />
         }
+
 
         @RenderBody()
     </main>
@@ -126,5 +130,13 @@
         }
     </script>
 
+
+
+
+
 </body>
 </html>
+
+
+    
+

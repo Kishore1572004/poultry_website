@@ -7,13 +7,16 @@ namespace Poultry_website.Service
 {
     public class HomeService : IHomeService
     {
+        // Reference to the repository interface
         private readonly IHomeRepository _repository;
 
+        // Constructor to inject the repository into the service
         public HomeService(IHomeRepository repository)
         {
             _repository = repository;
         }
 
+        //  method returns a list of gallery items from the repository
         public List<GalleryItem> GetGalleryItems()
         {
             try
@@ -22,12 +25,13 @@ namespace Poultry_website.Service
             }
             catch (Exception ex)
             {
-                // Log the error (optional): Log.Error("Failed to get gallery items", ex);
+                
                 Console.WriteLine($"Error fetching gallery items: {ex.Message}");
-                return new List<GalleryItem>(); // return empty list on failure
+                return new List<GalleryItem>();
             }
         }
 
+        //  gets a user by their email from the repository
         public User GetUserByEmail(string email)
         {
             try
@@ -36,7 +40,7 @@ namespace Poultry_website.Service
             }
             catch (Exception ex)
             {
-                // Log.Error($"Error fetching user with email {email}", ex);
+                
                 Console.WriteLine($"Error fetching user by email: {ex.Message}");
                 return null;
             }
